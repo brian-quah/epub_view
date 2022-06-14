@@ -68,8 +68,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: f97c7f6c9811b0975483f92306f8a1b543a4a8dc
+      ref: "feature/spine-test"
+      resolved-ref: "92b83ed2bcb8c51421025b86d9ffee373bf98ac0"
       url: "https://github.com/brian-quah/epubx.dart.git"
     source: git
     version: "3.0.0"

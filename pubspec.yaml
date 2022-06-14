@@ -11,7 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   epubx:
-    git: https://github.com/brian-quah/epubx.dart.git
+    git:
+      url: https://github.com/brian-quah/epubx.dart.git
+      ref: feature/spine-test
   equatable: ^2.0.3
   html: ^0.15.0
   flutter_html: ^3.0.0-alpha.2
