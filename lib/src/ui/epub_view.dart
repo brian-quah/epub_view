@@ -298,22 +298,25 @@ class _EpubViewState extends State<EpubView> {
     return posIndex;
   }
 
-  static Widget _chapterDividerBuilder(EpubChapter chapter) => Container(
-        height: 56,
-        width: double.infinity,
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Color(0x24000000),
-        ),
-        alignment: Alignment.centerLeft,
-        child: Text(
-          chapter.Title ?? '',
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      );
+  static Widget _chapterDividerBuilder(EpubChapter chapter) =>
+      chapter.Title != null
+          ? Container(
+              height: 56,
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                color: Color(0x24000000),
+              ),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                chapter.Title ?? '',
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          : Container();
 
   static Widget _chapterBuilder(
     BuildContext context,
@@ -332,7 +335,10 @@ class _EpubViewState extends State<EpubView> {
 
     final defaultBuilder = builders as EpubViewBuilders<DefaultBuilderOptions>;
     final options = defaultBuilder.options;
-
+    var style = Style.fromCss('styles/stylesheet.css', (_, __) => null);
+    style['html'] = (style['html'] ?? Style()).merge(Style(
+      padding: options.paragraphPadding as EdgeInsets?,
+    ).merge(Style.fromTextStyle(options.textStyle)));
     return Column(
       children: <Widget>[
         if (chapterIndex >= 0 && paragraphIndex == 0)
@@ -340,11 +346,7 @@ class _EpubViewState extends State<EpubView> {
         Html(
           data: paragraphs[index].element.outerHtml,
           onLinkTap: (href, _, __, ___) => onExternalLinkPressed(href!),
-          style: {
-            'html': Style(
-              padding: options.paragraphPadding as EdgeInsets?,
-            ).merge(Style.fromTextStyle(options.textStyle)),
-          },
+          style: style,
           customRenders: {
             tagMatcher('img'):
                 CustomRender.widget(widget: (context, buildChildren) {

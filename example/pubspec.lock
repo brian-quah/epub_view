@@ -76,7 +76,7 @@ packages:
     description:
       path: "."
       ref: "feature/spine-test"
-      resolved-ref: "92b83ed2bcb8c51421025b86d9ffee373bf98ac0"
+      resolved-ref: "4629c67eb74abec63f507fbcb62117726aacd421"
       url: "https://github.com/brian-quah/epubx.dart.git"
     source: git
     version: "3.0.0"
