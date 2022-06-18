@@ -335,7 +335,14 @@ class _EpubViewState extends State<EpubView> {
 
     final defaultBuilder = builders as EpubViewBuilders<DefaultBuilderOptions>;
     final options = defaultBuilder.options;
-    var style = Style.fromCss('styles/stylesheet.css', (_, __) => null);
+    var css = document.Content?.Css;
+    var style = Style.fromCss(
+        css?['Styles/stylesheet.css']?.Content ??
+            css?['styles/stylesheet.css']?.Content ??
+            css?.entries.firstOrNull?.value.Content ??
+            '',
+        (_, __) => null);
+    //
     style['html'] = (style['html'] ?? Style()).merge(Style(
       padding: options.paragraphPadding as EdgeInsets?,
     ).merge(Style.fromTextStyle(options.textStyle)));
