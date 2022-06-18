@@ -310,6 +310,7 @@ class _EpubViewState extends State<EpubView> {
               alignment: Alignment.centerLeft,
               child: Text(
                 chapter.Title ?? '',
+                maxLines: 3,
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -336,8 +337,6 @@ class _EpubViewState extends State<EpubView> {
 
     final defaultBuilder = builders as EpubViewBuilders<DefaultBuilderOptions>;
     final options = defaultBuilder.options;
-    var css = document.Content?.Css;
-
     style['html'] = (style['html'] ?? Style()).merge(Style(
       padding: options.paragraphPadding as EdgeInsets?,
     ).merge(Style.fromTextStyle(options.textStyle)));
