@@ -322,6 +322,7 @@ class _EpubViewState extends State<EpubView> {
     BuildContext context,
     EpubViewBuilders builders,
     EpubBook document,
+    Map<String, Style> style,
     List<EpubChapter> chapters,
     List<Paragraph> paragraphs,
     int index,
@@ -336,13 +337,7 @@ class _EpubViewState extends State<EpubView> {
     final defaultBuilder = builders as EpubViewBuilders<DefaultBuilderOptions>;
     final options = defaultBuilder.options;
     var css = document.Content?.Css;
-    var style = Style.fromCss(
-        css?['Styles/stylesheet.css']?.Content ??
-            css?['styles/stylesheet.css']?.Content ??
-            css?.entries.firstOrNull?.value.Content ??
-            '',
-        (_, __) => null);
-    //
+
     style['html'] = (style['html'] ?? Style()).merge(Style(
       padding: options.paragraphPadding as EdgeInsets?,
     ).merge(Style.fromTextStyle(options.textStyle)));
@@ -384,6 +379,7 @@ class _EpubViewState extends State<EpubView> {
           context,
           widget.builders,
           widget.controller._document!,
+          widget.controller._style!,
           _chapters,
           _paragraphs,
           index,

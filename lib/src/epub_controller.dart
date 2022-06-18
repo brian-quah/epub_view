@@ -12,6 +12,7 @@ class EpubController {
   _EpubViewState? _epubViewState;
   List<EpubViewChapter>? _cacheTableOfContents;
   EpubBook? _document;
+  Map<String, Style>? _style;
 
   EpubChapterViewValue? get currentValue => _epubViewState?._currentValue;
 
@@ -111,6 +112,13 @@ class EpubController {
     try {
       loadingState.value = EpubViewLoadingState.loading;
       _document = await document;
+      var css = _document!.Content?.Css;
+      _style = Style.fromCss(
+          css?['Styles/stylesheet.css']?.Content ??
+              css?['styles/stylesheet.css']?.Content ??
+              css?.entries.firstOrNull?.value.Content ??
+              '',
+          (_, __) => null);
       await _epubViewState!._init();
       tableOfContentsListenable.value = tableOfContents();
       loadingState.value = EpubViewLoadingState.success;
