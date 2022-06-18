@@ -301,7 +301,6 @@ class _EpubViewState extends State<EpubView> {
   static Widget _chapterDividerBuilder(EpubChapter chapter) =>
       chapter.Title != null
           ? Container(
-              height: 56,
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: const BoxDecoration(
@@ -310,7 +309,6 @@ class _EpubViewState extends State<EpubView> {
               alignment: Alignment.centerLeft,
               child: Text(
                 chapter.Title ?? '',
-                maxLines: 3,
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
