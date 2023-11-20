@@ -299,27 +299,30 @@ class _EpubViewState extends State<EpubView> {
     return posIndex;
   }
 
-  static Widget _chapterDividerBuilder(EpubChapter chapter) => Container(
-        height: 56,
-        width: double.infinity,
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Color(0x24000000),
-        ),
-        alignment: Alignment.centerLeft,
-        child: Text(
-          chapter.Title ?? '',
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      );
+  static Widget _chapterDividerBuilder(EpubChapter chapter) =>
+      chapter.Title != null
+          ? Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                color: Color(0x24000000),
+              ),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                chapter.Title ?? '',
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          : Container();
 
   static Widget _chapterBuilder(
     BuildContext context,
     EpubViewBuilders builders,
     EpubBook document,
+    Map<String, Style> style,
     List<EpubChapter> chapters,
     List<Paragraph> paragraphs,
     int index,
@@ -334,6 +337,14 @@ class _EpubViewState extends State<EpubView> {
     final defaultBuilder = builders as EpubViewBuilders<DefaultBuilderOptions>;
     final options = defaultBuilder.options;
 
+    var paddings = options.paragraphPadding as EdgeInsets;
+    style['html'] = (style['html'] ?? Style()).merge(Style(
+      padding: HtmlPaddings(
+          left: HtmlPadding(paddings.left),
+          right: HtmlPadding(paddings.right),
+          top: HtmlPadding(paddings.top),
+          bottom: HtmlPadding(paddings.bottom)),
+    ).merge(Style.fromTextStyle(options.textStyle)));
     return Column(
       children: <Widget>[
         if (chapterIndex >= 0 && paragraphIndex == 0)
@@ -341,16 +352,7 @@ class _EpubViewState extends State<EpubView> {
         Html(
           data: paragraphs[index].element.outerHtml,
           onLinkTap: (href, _, __) => onExternalLinkPressed(href!),
-          style: {
-            'html': Style(
-              padding: HtmlPaddings.only(
-                top: (options.paragraphPadding as EdgeInsets?)?.top,
-                right: (options.paragraphPadding as EdgeInsets?)?.right,
-                bottom: (options.paragraphPadding as EdgeInsets?)?.bottom,
-                left: (options.paragraphPadding as EdgeInsets?)?.left,
-              ),
-            ).merge(Style.fromTextStyle(options.textStyle)),
-          },
+          style: style,
           extensions: [
             TagExtension(
               tagsToExtend: {"img"},
@@ -382,6 +384,7 @@ class _EpubViewState extends State<EpubView> {
           context,
           widget.builders,
           widget.controller._document!,
+          widget.controller._style!,
           _chapters,
           _paragraphs,
           index,
