@@ -77,8 +77,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "7636170e5743d0b98075ac4e6d987799722b5187"
-      resolved-ref: "7636170e5743d0b98075ac4e6d987799722b5187"
+      ref: "53a5c8e1e54da546ded4f24bd64990560c643cd7"
+      resolved-ref: "53a5c8e1e54da546ded4f24bd64990560c643cd7"
       url: "https://github.com/brian-quah/epubx.dart.git"
     source: git
     version: "4.0.0"
@@ -136,10 +136,10 @@ packages:
     dependency: transitive
     description:
       name: image
-      sha256: "49a0d4b0c12402853d3f227fe7c315601b238d126aa4caa5dbb2dcf99421aa4a"
+      sha256: "8e9d133755c3e84c73288363e6343157c383a0c6c56fc51afcc5d4d7180306d6"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.6"
+    version: "3.3.0"
   js:
     dependency: transitive
     description:
