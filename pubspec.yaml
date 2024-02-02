@@ -15,7 +15,7 @@ dependencies:
   epubx:
     git:
       url: https://github.com/brian-quah/epubx.dart.git
-      ref: 7636170e5743d0b98075ac4e6d987799722b5187
+      ref: 53a5c8e1e54da546ded4f24bd64990560c643cd7
   equatable: ^2.0.5
   html: ^0.15.4
   flutter_html: ^3.0.0-beta.2
